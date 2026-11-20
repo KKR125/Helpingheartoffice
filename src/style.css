@@ -132,3 +132,64 @@
 .dark .emptyhistory{background:#151d2d;color:#aeb9cf}
 .dark .versionitem{border-color:#39445a}
 .dark .versionitem b{color:#e9edfa}
+
+/* Phase 4.1 — Paint Studio and public product guide */
+.paintprobar{display:flex;flex-direction:column;gap:8px;padding:10px 16px;background:#fff;border-bottom:1px solid #e2e7f0}
+.painttools,.paintsettings,.paintpalette,.paintactions,.paintzoom{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.painttools button,.paintpalette button,.paintactions button,.paintzoom button{display:flex;align-items:center;gap:5px;border:1px solid #e0e6f0;background:#fff;color:#5d6b83;border-radius:7px;padding:7px 9px;font-size:11px;cursor:pointer}
+.painttools button.paintactive,.paintpalette button.paintactive{background:#edf1ff;border-color:#bfcaff;color:#4e6fe1}
+.painttools button span{font-size:11px}
+.paintsettings{font-size:11px;color:#64728b}
+.paintsettings label,.paintpalette label{display:flex;align-items:center;gap:6px}
+.paintsettings input[type=range]{width:100px}
+.paintsettings input[type=color],.paintpalette input[type=color]{width:28px;height:25px;border:0;background:none;padding:0}
+.paintsettings select{border:1px solid #dfe5ef;border-radius:6px;padding:6px;color:#5d6b83;background:#fff}
+.paintpalette{padding:8px 16px;background:#f8f9fc;border-bottom:1px solid #e5eaf2}
+.paintpalette>button:not(:last-child){width:21px;height:21px;padding:0;border-radius:5px}
+.paintpalette label{font-size:11px;color:#65738b}
+.paintpalette>button:last-child{margin-left:auto}
+.paintwork{display:flex;min-height:calc(100vh - 240px);background:#edf0f6}
+.paintlayers{width:210px;flex-shrink:0;padding:13px;background:#fff;border-right:1px solid #e1e6ef}
+.paintlayerhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;color:#52617d;font-size:12px}
+.paintlayerhead b{display:flex;align-items:center;gap:7px}
+.paintlayerhead button,.paintlayer>button{border:0;background:transparent;color:#73819a;cursor:pointer;padding:5px}
+.paintlayer{display:flex;align-items:center;gap:5px;padding:5px;border:1px solid transparent;border-radius:7px;margin-bottom:5px}
+.paintlayer.selected{background:#eef2ff;border-color:#cbd5ff}
+.paintlayer .layername{flex:1;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
+.layeractions{display:flex;gap:3px;margin-top:12px;padding-top:10px;border-top:1px solid #e9edf4}
+.layeractions button{display:flex;align-items:center;gap:3px;border:1px solid #e0e6ef;background:white;border-radius:5px;padding:5px;color:#697791;font-size:10px;cursor:pointer}
+.paintlayers>small{display:block;color:#9aa4b6;font-size:10px;line-height:1.5;margin-top:12px}
+.paintstagewrap{flex:1;min-width:0;overflow:auto;padding:26px;display:flex;align-items:flex-start;justify-content:center}
+.paintstage{position:relative;flex:none;background-color:white;background-repeat:repeat;box-shadow:0 5px 24px #26334d22}
+.paintstage>canvas{position:absolute;inset:0;display:block;touch-action:none;cursor:crosshair}
+.paintstage>canvas.paintoverlay{pointer-events:none}
+.paintselection{position:absolute;border:1px dashed #3d67e8;background:#5b7ee51a;pointer-events:none}
+.paintbottom{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 14px;background:#fff;border-top:1px solid #e1e6ef}
+.paintactions{gap:5px}
+.paintactions button:disabled{opacity:.4;cursor:not-allowed}
+.paintzoom{flex-shrink:0;color:#71809a;font-size:11px}
+.paintimport{position:relative;display:flex;align-items:center;gap:5px;border:1px solid #e0e6f0;background:#fff;color:#5d6b83;border-radius:7px;padding:7px 9px;font-size:11px;cursor:pointer;overflow:hidden}
+.paintimport input{position:absolute;inset:0;opacity:0;width:100%;cursor:pointer}
+.help-page{max-width:1050px;margin:0 auto;padding:12px 0 45px;color:#293750}
+.help-page h1{font:800 30px Manrope;letter-spacing:-.7px;margin:12px 0}
+.help-page h2{font:700 18px Manrope;margin:28px 0 12px}
+.help-page p,.help-page li{font-size:13px;line-height:1.75;color:#697791}
+.help-lead{max-width:780px;font-size:14px!important}
+.help-callout{display:flex;flex-direction:column;gap:6px;padding:16px 18px;margin:22px 0;background:#eef2ff;border:1px solid #dbe3ff;border-radius:12px;color:#4d629b;font-size:13px;line-height:1.6}
+.help-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.help-grid article{padding:16px;border:1px solid #e4e9f1;border-radius:11px;background:#fff}
+.help-grid article b{font:700 14px Manrope;color:#34415e}
+.help-grid article p{margin:8px 0;font-size:12px}
+.help-grid article small{display:block;color:#8a96aa;font-size:11px;line-height:1.6}
+.help-page ul{padding-left:22px}
+.help-foot{padding-top:18px;border-top:1px solid #e5eaf2;font-size:11px!important;color:#8e99ad!important}
+.footlink{border:0;background:none;color:#657ee0;text-decoration:underline;cursor:pointer;font:inherit}
+.dark .paintprobar,.dark .paintpalette,.dark .paintlayers,.dark .paintbottom,.dark .painttools button,.dark .paintpalette button,.dark .paintactions button,.dark .paintimport{background:#20283b;color:#e9edfa;border-color:#39445a}
+.dark .paintwork,.dark .paintstagewrap{background:#151b2b}
+.dark .paintlayer.selected,.dark .help-callout{background:#293653;border-color:#465982;color:#e0e8ff}
+.dark .paintsettings,.dark .paintlayers>small,.dark .help-page p,.dark .help-page li{color:#aeb9cf}
+.dark .paintlayerhead,.dark .help-page,.dark .help-grid article b{color:#e9edfa}
+.dark .help-grid article{background:#20283b;border-color:#39445a}
+.dark .help-page article small,.dark .help-foot{color:#aeb9cf!important}
+@media(max-width:850px){.paintlayers{width:165px}.paintbottom{align-items:flex-start;flex-direction:column}.paintactions{overflow:auto;max-width:100%;flex-wrap:nowrap}.paintactions>*{flex-shrink:0}}
+@media(max-width:620px){.paintwork{flex-direction:column}.paintlayers{width:100%;border-right:0;border-bottom:1px solid #e1e6ef}.paintlayers>small{display:none}.paintstagewrap{padding:12px}.painttools button{padding:7px}.painttools button span{font-size:10px}.paintsettings{gap:9px}.paintpalette{padding:7px}.help-grid{grid-template-columns:1fr}.help-page h1{font-size:23px}.paintzoom{align-self:flex-end}}
