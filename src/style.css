@@ -122,3 +122,13 @@
 .dark .accountdialog form input,.dark .accountemail{background:#151d2d;color:#edf1ff;border-color:#39445a}
 .dark .accountbutton{background:#20283b;color:#e9edfa;border-color:#39445a}
 @media(max-width:650px){.accountbutton{padding:7px 8px;font-size:11px}.topright{gap:7px}.accountdialog{padding:24px}}
+
+.historydialog{max-height:min(80vh,700px);overflow:auto}
+.emptyhistory{padding:18px;border-radius:9px;background:#f5f7fc;color:#8a96aa;font-size:12px;line-height:1.6}
+.versionlist{display:flex;flex-direction:column;gap:9px}
+.versionitem{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid #e5eaf2;border-radius:9px}
+.versionitem b{display:block;font-size:12px;color:#43516d}
+.versionitem small{display:block;margin-top:5px;color:#8d99ad;font-size:10px}
+.dark .emptyhistory{background:#151d2d;color:#aeb9cf}
+.dark .versionitem{border-color:#39445a}
+.dark .versionitem b{color:#e9edfa}
