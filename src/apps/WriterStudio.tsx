@@ -1,0 +1,32 @@
+import {useMemo,useState} from 'react';
+import {EditorContent,useEditor} from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import {Table} from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import {ArrowLeft,Download,Printer,Undo2,Redo2,Bold,Italic,Underline as UnderlineIcon,Strikethrough,Heading1,Heading2,List,ListOrdered,Quote,Code,Minus,Table as TableIcon,Plus,Trash2,FileText} from 'lucide-react';
+type Props={doc:any;back:()=>void;save:(d:any)=>void;dark:boolean};
+const esc=(s:string)=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+export default function WriterStudio({doc,back,save,dark}:Props){
+ const [name,setName]=useState(doc.name),[pageSize,setPageSize]=useState('A4'),[zoom,setZoom]=useState(100),[showRuler,setShowRuler]=useState(true);
+ const editor=useEditor({extensions:[StarterKit,Underline,Table.configure({resizable:true}),TableRow,TableHeader,TableCell],content:doc.content?.startsWith('<')?doc.content:'<p>'+esc(doc.content||'')+'</p>',editorProps:{attributes:{class:'ProseMirror writer-prosemirror',spellcheck:'true'}},onUpdate:({editor})=>save({...doc,name,content:editor.getHTML(),updated:Date.now()})});
+ const wordCount=useMemo(()=>{const text=editor?.getText()||'';return {words:text.trim()?text.trim().split(/\s+/).length:0,chars:text.length}},[editor?.state]);
+ const run=(fn:()=>void)=>{fn();editor?.commands.focus()};
+ const exportWord=()=>{const html='<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;line-height:1.6}table{border-collapse:collapse;width:100%}td,th{border:1px solid #888;padding:6px}blockquote{border-left:4px solid #789;padding-left:12px}</style></head><body>'+ (editor?.getHTML()||'')+'</body></html>';const a=document.createElement('a'),url=URL.createObjectURL(new Blob([html],{type:'application/msword'}));a.href=url;a.download=(name||'Document')+'.doc';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+ const button=(label:string,icon:any,fn:()=>void,active=false)=><button type="button" className={'writer-tool '+(active?'active':'')} title={label} aria-label={label} onMouseDown={e=>e.preventDefault()} onClick={()=>run(fn)}>{icon}</button>;
+ return <div className={dark?'app dark editorapp':'app editorapp'}>
+ <header className="top writer-top"><button className="iconbtn" onClick={back} aria-label="Back"><ArrowLeft/></button><b>HelpingHeart Writer</b><input className="nameinput" aria-label="Document name" value={name} onChange={e=>{setName(e.target.value);save({...doc,name:e.target.value,updated:Date.now()})}}/><span className="saved">Saved automatically</span><button className="outline" onClick={()=>window.print()}><Printer size={15}/> Print / PDF</button><button className="primary small" onClick={exportWord}><Download size={15}/> Word file</button></header>
+ <nav className="writer-ribbon" aria-label="Formatting toolbar">
+ <div className="writer-group"><span>History</span>{button('Undo',<Undo2 size={16}/>,()=>editor?.chain().undo().run())}{button('Redo',<Redo2 size={16}/>,()=>editor?.chain().redo().run())}</div>
+ <div className="writer-group"><span>Text</span>{button('Bold',<Bold size={16}/>,()=>editor?.chain().toggleBold().run(),!!editor?.isActive('bold'))}{button('Italic',<Italic size={16}/>,()=>editor?.chain().toggleItalic().run(),!!editor?.isActive('italic'))}{button('Underline',<UnderlineIcon size={16}/>,()=>editor?.chain().toggleUnderline().run(),!!editor?.isActive('underline'))}{button('Strikethrough',<Strikethrough size={16}/>,()=>editor?.chain().toggleStrike().run(),!!editor?.isActive('strike'))}</div>
+ <div className="writer-group"><span>Paragraph</span>{button('Normal paragraph',<FileText size={16}/>,()=>editor?.chain().setParagraph().run(),!!editor?.isActive('paragraph'))}{button('Heading 1',<Heading1 size={16}/>,()=>editor?.chain().toggleHeading({level:1}).run(),!!editor?.isActive('heading',{level:1}))}{button('Heading 2',<Heading2 size={16}/>,()=>editor?.chain().toggleHeading({level:2}).run(),!!editor?.isActive('heading',{level:2}))}{button('Bulleted list',<List size={16}/>,()=>editor?.chain().toggleBulletList().run(),!!editor?.isActive('bulletList'))}{button('Numbered list',<ListOrdered size={16}/>,()=>editor?.chain().toggleOrderedList().run(),!!editor?.isActive('orderedList'))}{button('Quote',<Quote size={16}/>,()=>editor?.chain().toggleBlockquote().run(),!!editor?.isActive('blockquote'))}{button('Code block',<Code size={16}/>,()=>editor?.chain().toggleCodeBlock().run())}</div>
+ <div className="writer-group"><span>Insert</span>{button('Insert table',<TableIcon size={16}/>,()=>editor?.chain().insertTable({rows:3,cols:3,withHeaderRow:true}).run())}{button('Add table row',<Plus size={16}/>,()=>editor?.chain().addRowAfter().run())}{button('Add table column',<Plus size={16}/>,()=>editor?.chain().addColumnAfter().run())}{button('Delete table',<Trash2 size={16}/>,()=>editor?.chain().deleteTable().run())}{button('Horizontal divider',<Minus size={16}/>,()=>editor?.chain().setHorizontalRule().run())}</div>
+ <div className="writer-group writer-page-tools"><span>Page</span><select aria-label="Page size" value={pageSize} onChange={e=>setPageSize(e.target.value)}><option>A4</option><option>Letter</option><option>Legal</option></select><button className="writer-tool" onClick={()=>setShowRuler(!showRuler)}>{showRuler?'Hide ruler':'Show ruler'}</button><button className="writer-tool" onClick={()=>setZoom(z=>Math.max(60,z-10))}>−</button><b>{zoom}%</b><button className="writer-tool" onClick={()=>setZoom(z=>Math.min(140,z+10))}>+</button></div>
+ </nav>
+ {showRuler&&<div className="writer-ruler"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span><span>12</span><span>14</span><span>16</span></div>}
+ <main className="writer-workspace"><div className={'writer-paper page-'+pageSize.toLowerCase()} style={{transform:'scale('+zoom/100+')',transformOrigin:'top center'}}><EditorContent editor={editor}/></div></main>
+ <footer className="writer-status"><span>Page layout: {pageSize}</span><span>{wordCount.words} words · {wordCount.chars} characters</span><span>Rich text editor</span></footer>
+ </div>
+}
