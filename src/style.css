@@ -89,3 +89,12 @@
 .dark .paintarea,.dark .diagramarea,.dark .pdfworkspace,.dark .mathworkspace{background:#151b2b}
 .dark .pdfnote{background:#2b3650;color:#e9edfa}
 @media(max-width:700px){.pdfworkspace{flex-direction:column}.pdfnotes{width:100%;border-left:0;border-top:1px solid #e2e7f0}.mathworkspace{flex-direction:column}.mathsymbols{width:100%;border-right:0;border-bottom:1px solid #e4e9f1}.mathsymbols>div{grid-template-columns:repeat(4,1fr)}.mathmain{padding:20px}.painttoolbar{gap:6px;padding:8px}.painttoolbar button{padding:7px}.painttoolbar label{font-size:10px}}
+
+.baseintro{display:flex;align-items:center;gap:9px;padding:16px 22px;color:#66758e;font-size:12px;background:#fff;border-bottom:1px solid #e4e9f1}
+.basetablewrap{overflow:auto;padding:20px}
+.basetable{border-collapse:collapse;background:#fff;min-width:650px;width:100%;box-shadow:0 4px 18px #25324a0b}
+.basetable th{background:#f0f3fa;color:#65728a;text-align:left;font-size:12px;padding:12px;border:1px solid #e2e7f0}
+.basetable td{border:1px solid #e2e7f0;padding:5px;color:#7d899e;font-size:12px}
+.basetable td input{width:100%;min-width:120px;padding:8px;border:0;outline:0;background:transparent;color:#2e3b58;font:12px 'DM Sans'}
+.dark .baseintro,.dark .basetable{background:#20283b;color:#e9edfa;border-color:#39445a}
+.dark .basetable th{background:#2a344a;color:#dce4f7}.dark .basetable td input{color:#e9edfa}
