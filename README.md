@@ -33,6 +33,7 @@ HelpingHeart Office is a React + TypeScript productivity workspace for the web. 
 - Per-user cloud file storage: file contents in Firebase Storage and metadata in Firestore.
 - Browser-local saving remains available when Firebase is not configured.
 - Cloud restore and automatic upload after sign-in.
+- Local version snapshots and restore controls, with a rolling history of up to 15 saved versions per file.
 - Firestore and Storage security rules scoped to the authenticated user's UID.
 - PWA manifest and service worker for installability and caching of visited app assets.
 - Persistent light/dark preference and JSON workspace backup export.
