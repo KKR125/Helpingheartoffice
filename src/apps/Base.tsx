@@ -1,0 +1,13 @@
+import {useState} from 'react';
+import {ArrowLeft,Plus,Download,Trash2,Database} from 'lucide-react';
+type Props={doc:any,back:()=>void,save:(d:any)=>void,dark:boolean};
+export default function Base({doc,back,save,dark}:Props){
+ const initial=()=>{try{const p=JSON.parse(doc.content||'{}');if(p.fields&&p.records)return p}catch{}return {fields:['Name','Category','Notes'],records:[{id:1,Name:'Example record',Category:'Sample',Notes:'Edit or delete this row'}]}}
+ const [db,setDb]=useState(initial),[name,setName]=useState(doc.name);
+ const persist=(v:any)=>{setDb(v);save({...doc,name,content:JSON.stringify(v),updated:Date.now()})};
+ const addField=()=>{const f=prompt('New field name');if(f&&!db.fields.includes(f))persist({...db,fields:[...db.fields,f],records:db.records.map((r:any)=>({...r,[f]:''}))})};
+ const addRecord=()=>persist({...db,records:[...db.records,{id:Date.now(),...Object.fromEntries(db.fields.map((f:string)=>[f,'']))}]});
+ const update=(id:number,field:string,value:string)=>persist({...db,records:db.records.map((r:any)=>r.id===id?{...r,[field]:value}:r)});
+ const csv=()=>{const quote=(v:any)=>'"'+String(v??'').replace(/"/g,'""')+'"';const text=[db.fields.map(quote).join(','),...db.records.map((r:any)=>db.fields.map((f:string)=>quote(r[f])).join(','))].join('\n');const u=URL.createObjectURL(new Blob([text],{type:'text/csv'})),a=document.createElement('a');a.href=u;a.download=name+'.csv';a.click();URL.revokeObjectURL(u)};
+ return <div className={dark?'app dark editorapp':'app editorapp'}><header className="top"><button className="iconbtn" onClick={back}><ArrowLeft/></button><b>HelpingHeart Base</b><input className="nameinput" value={name} onChange={e=>setName(e.target.value)}/><button className="outline" onClick={addField}><Plus size={15}/> Add field</button><button className="outline" onClick={addRecord}><Plus size={15}/> Add record</button><button className="primary small" onClick={csv}><Download size={16}/> Export CSV</button></header><div className="baseintro"><Database size={20}/><span>Table view · {db.records.length} records · {db.fields.length} fields</span></div><div className="basetablewrap"><table className="basetable"><thead><tr><th>#</th>{db.fields.map((f:string)=><th key={f}>{f}</th>)}<th>Actions</th></tr></thead><tbody>{db.records.map((r:any,i:number)=><tr key={r.id}><td>{i+1}</td>{db.fields.map((f:string)=><td key={f}><input value={r[f]??''} onChange={e=>update(r.id,f,e.target.value)}/></td>)}<td><button className="iconbtn danger" onClick={()=>persist({...db,records:db.records.filter((x:any)=>x.id!==r.id)})}><Trash2 size={15}/></button></td></tr>)}</tbody></table></div></div>
+}
