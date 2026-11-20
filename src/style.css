@@ -246,3 +246,30 @@
 .dark .ppt-layout{background:#151b2b}
 @media(max-width:900px){.ppt-inspector{width:175px}.ppt-slides{width:150px}}
 @media(max-width:650px){.ppt-inspector{display:none}.ppt-slides{width:112px;padding:7px}.ppt-work{padding:5px}.ppt-ribbon{gap:7px;padding:7px}.ppt-group{padding-right:6px}.ppt-group>b{display:none}.ppt-stage-scroll{padding:3px}.ppt-slide{width:100%;min-width:460px}.ppt-present-controls{gap:5px}.ppt-present-controls button{padding:6px;font-size:10px}}
+
+/* Expanded Paint Studio palette and Impress sample deck effects */
+.paintpalette{flex-wrap:wrap;gap:5px}
+.paintpalette button:not(.paintactive){min-width:19px;min-height:19px}
+.paintsettings select{max-width:150px}
+.ppt-group select{max-width:145px;border:1px solid #dfe5ef;border-radius:6px;padding:7px;background:#fff;color:#53617a;font-size:11px}
+.ppt-group button:disabled{opacity:.45}
+.ppt-present-slide{isolation:isolate;animation-duration:.65s;animation-fill-mode:both}
+.ppt-present-slide:before{content:"";position:absolute;inset:0;background:linear-gradient(125deg,transparent 40%,#ffffff12);pointer-events:none;z-index:0}
+.ppt-present-slide h1,.ppt-present-slide p{position:relative;z-index:1}
+.transition-fade{animation-name:pptFade}
+.transition-slide{animation-name:pptSlide}
+.transition-zoom{animation-name:pptZoom}
+.transition-wipe{animation-name:pptWipe}
+@keyframes pptFade{from{opacity:0}to{opacity:1}}
+@keyframes pptSlide{from{opacity:0;transform:translateX(7%)}to{opacity:1;transform:translateX(0)}}
+@keyframes pptZoom{from{opacity:0;transform:scale(.88)}to{opacity:1;transform:scale(1)}}
+@keyframes pptWipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.ppt-animated{animation-duration:.8s;animation-fill-mode:both}
+.animation-fade{animation-name:pptFade}
+.animation-zoom{animation-name:pptZoom}
+.animation-fly{animation-name:pptSlide}
+.animation-none{animation:none}
+.ppt-present-slide h1{font-size:clamp(28px,4.5vw,64px);line-height:1.12;max-width:90%;text-shadow:0 2px 15px #0002}
+.ppt-present-slide p{font-size:clamp(16px,2.2vw,30px);line-height:1.45;max-width:80%;white-space:pre-wrap;text-shadow:0 1px 8px #0002}
+.ppt-present-slide .ppt-animated{z-index:2}
+@media(prefers-reduced-motion:reduce){.ppt-present-slide,.ppt-animated{animation:none!important}}
