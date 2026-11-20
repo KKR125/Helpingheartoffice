@@ -280,3 +280,12 @@
 @media print{.writer-top,.writer-ribbon,.writer-ruler,.writer-status{display:none!important}.writer-workspace{background:#fff;padding:0;overflow:visible}.writer-paper,.writer-paper.page-a4,.writer-paper.page-letter,.writer-paper.page-legal{box-shadow:none;margin:0;transform:none!important;width:auto;min-height:0;padding:0}.writer-prosemirror{min-height:0}}
 
 .paintobjectselection{position:absolute;border:2px dashed #3f6fe8;outline:1px solid #fff;pointer-events:none;z-index:3;box-shadow:0 0 0 1px #3f6fe855}
+
+/* Writer page headers and footers */
+.writer-page-header,.writer-page-footer{width:100%;min-height:34px;display:flex;align-items:center;color:#69758d;font:12px/1.4 Arial,sans-serif}
+.writer-page-header{margin:0 0 24px;border-bottom:1px solid #dfe4ed;padding:0 0 8px}
+.writer-page-footer{margin:28px 0 0;border-top:1px solid #dfe4ed;padding:8px 0 0}
+.writer-page-header input,.writer-page-footer input{width:100%;border:0;outline:0;background:transparent;color:inherit;font:inherit;padding:4px 0}
+.writer-page-header input::placeholder,.writer-page-footer input::placeholder{color:#a0aabd}
+.dark .writer-page-header,.dark .writer-page-footer{color:#c2cbe0;border-color:#48536a}
+@media print{.writer-page-header,.writer-page-footer{color:#222;border-color:#bbb}.writer-page-header input,.writer-page-footer input{color:#222}}
