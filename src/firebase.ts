@@ -2,6 +2,7 @@ import {initializeApp,getApps} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
+
 const config={
  apiKey:import.meta.env.VITE_FIREBASE_API_KEY,
  authDomain:import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -10,8 +11,13 @@ const config={
  messagingSenderId:import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
  appId:import.meta.env.VITE_FIREBASE_APP_ID
 };
-export const firebaseReady=Object.values(config).every(Boolean);
-const app=firebaseReady?(getApps()[0]||initializeApp(config)):null;
+
+// Authentication must not depend on Storage being configured.
+// This keeps Sign In and Create Account available when the bucket is missing.
+const authConfigReady=Boolean(config.apiKey&&config.authDomain&&config.projectId&&config.appId);
+const app=authConfigReady?(getApps()[0]||initializeApp(config)):null;
+
 export const auth=app?getAuth(app):null;
 export const db=app?getFirestore(app):null;
-export const storage=app?getStorage(app):null;
+export const storage=app&&config.storageBucket?getStorage(app):null;
+export const firebaseReady=Boolean(auth);
